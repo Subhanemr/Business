@@ -1,0 +1,47 @@
+﻿@model ICollection<Author>
+@{
+    int count = 0;
+}
+<div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Author Table</h4>
+            <a class="btn btn-primary" asp-action="Create" asp-controller="Author">Create</a>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Blogs Count</th>
+                            <th>Settings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            count++;
+                            <tr>
+                                <td>@count</td>
+                                <td><img src="~/assets/images//@item.Img"></td>
+                                <td>@item.Name</td>
+                                <td>@item.Surname</td>
+                                <td>@item.Blogs.Count</td>
+                                <td>
+                                    <a asp-action="Update" asp-controller="Author" asp-route-id="@item.Id" class="btn btn-warning">Update</a>
+                                    @if (User.IsInRole(UserRoles.Admin.ToString()))
+                                    {
+                                        <a asp-action="Delete" asp-controller="Author" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                                    }
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

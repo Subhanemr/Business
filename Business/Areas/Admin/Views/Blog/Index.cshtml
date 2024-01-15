@@ -1,0 +1,56 @@
+﻿@model PaginationVM<Blog>
+@{
+    int count = (Model.CurrentPage - 1) * 4;
+}
+<div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Blog Table</h4>
+            <a class="btn btn-primary" asp-action="Create" asp-controller="Blog">Create</a>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Image</th>
+                            <th>Title</th>
+                            <th>Sub-Title</th>
+                            <th>Author FullName</th>
+                            <th>Settings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            count++;
+                            <tr>
+                                <td>@count</td>
+                                <td><img src="~/assets/images//@item.Img"></td>
+                                <td>@item.Title</td>
+                                <td>@item.SubTitle</td>
+                                <td>@item.Author.Name @item.Author.Surname</td>
+                                <td>
+                                    <a asp-action="Update" asp-controller="Blog" asp-route-id="@item.Id" class="btn btn-warning">Update</a>
+                                    @if (User.IsInRole(UserRoles.Admin.ToString()))
+                                    {
+                                        <a asp-action="Delete" asp-controller="Blog" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item @(Model.CurrentPage == 1 ? "disabled":"")"><a class="page-link" asp-action="Index" asp-controller="Blog" asp-route-page="@Model.CurrentPage-1">Previous</a></li>
+                @for (int i = 1; i < Model.TotalPage; i++)
+                {
+                    <li class="page-item @(Model.CurrentPage == i ? "disabled":"")"><a class="page-link" asp-action="Index" asp-controller="Blog" asp-route-page="@i">@i</a></li>
+                }
+                <li class="page-item @(Model.CurrentPage == Model.CurrentPage ? "disabled":"")"><a class="page-link" asp-action="Index" asp-controller="Blog" asp-route-page="@Model.CurrentPage+1">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>

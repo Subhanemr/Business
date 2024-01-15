@@ -1,0 +1,39 @@
+﻿@model UpdateBlogVM
+
+<div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Update Blog</h4>
+            <form class="forms-sample" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label asp-for="Title">Title</label>
+                    <input asp-for="Title" class="form-control" placeholder="Title">
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SubTitle">SubTitle</label>
+                    <input asp-for="SubTitle" class="form-control" placeholder="SubTitle">
+                    <span asp-validation-for="SubTitle" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Img">Image</label>
+                    <img src="~/assets/images//@Model.Img" class="w-25">
+                    <input asp-for="Img" class="form-control" hidden="hidden">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Photo">Image</label>
+                    <input asp-for="Photo" class="form-control" placeholder="Image" accept="image/*">
+                    <span asp-validation-for="Photo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <select asp-for="AuthorId" asp-items="new SelectList(Model.Authors, nameof(Author.Id), nameof(Author.Name))" class="form-control">
+                        <option disabled selected>Choose Author</option>
+                    </select>
+                    <span asp-validation-for="AuthorId" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                <a asp-action="Index" asp-controller="Blog" class="btn btn-light">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
